@@ -1,18 +1,17 @@
-
-
 // User Class
 
 namespace core
 {
   export class User 
   {
+    // Instance Variables
     private m_displayName: string;
-    private m_username: string;
     private m_emailAddress: string;
+    private m_username: string;
     private m_password: string;
 
     // getters and setters
-    get DisplayName():string
+    get DisplayName() :string
     {
       return this.m_displayName;
     }
@@ -22,7 +21,7 @@ namespace core
       this.m_displayName = value;
     }
   
-    get EmailAddress():string 
+    get EmailAddress() :string
     {
       return this.m_emailAddress;
     }
@@ -32,7 +31,7 @@ namespace core
       this.m_emailAddress = value;
     }
 
-    get Username():string 
+    get Username() :string
     {
       return this.m_username;
     }
@@ -42,7 +41,7 @@ namespace core
       this.m_username = value;
     }
 
-    get Password():string 
+    get Password() :string
     {
       return this.m_password;
     }
@@ -76,7 +75,7 @@ namespace core
      *
      * @returns {string}
      */
-    public toString() 
+    public toString() :string
     {
       return `Display Name     : ${this.DisplayName} \nEmail Address : ${this.EmailAddress} \nUsername : ${this.Username}`;
     }
@@ -86,7 +85,7 @@ namespace core
      *
      * @returns {Object}
      */
-    public toJSON():Object
+    public toJSON(): Object
     {
       return {
         "DisplayName": this.DisplayName,
@@ -99,8 +98,9 @@ namespace core
      * This method takes a JSON data object and assigns the values to the User class properties
      *
      * @param {Object} data
+     * @returns {void}
      */
-    public fromJSON(data:any):void 
+    public fromJSON(data: any): void
     {
       this.DisplayName = data.DisplayName;
       this.EmailAddress = data.EmailAddress;
@@ -113,7 +113,7 @@ namespace core
      *
      * @returns {string}
      */
-    public serialize():string
+    public serialize(): string
     {
       if(this.DisplayName !== "" && this.EmailAddress !== "" && this.Username !== "")
       {
@@ -132,7 +132,7 @@ namespace core
      * @param {string} data
      * @return {void}
      */
-    public deserialize(data:string):void
+    public deserialize(data: string): void
     {
       let propertyArray = data.split(",");
       this.DisplayName = propertyArray[0];
@@ -140,7 +140,6 @@ namespace core
       this.Username = propertyArray[2];
     }
   }
-
 
 }
 

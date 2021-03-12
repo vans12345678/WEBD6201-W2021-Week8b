@@ -1,10 +1,11 @@
-
-namespace core{
-    export class Router {
-
-        //Instance variables
+namespace core
+{
+    export class Router 
+    { 
+        // Instance Variables
         private m_activeLink: string;
-        private m_routingTable:string[];
+        private m_linkData: string;
+        private m_routingTable: string[];
 
         // constructors
         constructor() 
@@ -13,37 +14,47 @@ namespace core{
         }
 
         // Public Properties (getters and setters)
-        get ActiveLink():string 
+        get ActiveLink(): string 
         {
             return this.m_activeLink;
         }
 
-        set ActiveLink(link:string ) 
+        set ActiveLink(link:string) 
         {
             this.m_activeLink = link;
+        }
+
+        get LinkData():string
+        {
+            return this.m_linkData;
+        }
+
+        set LinkData(data:string)
+        {
+            this.m_linkData = data;
         }
 
         // Public methods
 
         /**
-         * Adds new route to the Routing Table
+         * Adds a new route to the Routing Table
          *
          * @param {string} route
          * @returns {void}
          */
-        public Add(route:string):void 
+        public Add(route:string) :void
         {
             this.m_routingTable.push(route);
         }
 
         /**
-         * Replaces the current Routing Table with a new one
+         * This replaces the current Routing Table with a new one
          * Routes should begin with / character
          *
          * @param {string} routingTable
          * @returns {void}
          */
-        public AddTable(routingTable: string[]):void 
+        public AddTable(routingTable: string[]) :void
         {
             this.m_routingTable = routingTable;
         }
@@ -55,7 +66,7 @@ namespace core{
          * @param {string} route
          * @returns {number}
          */
-        public Find(route:string):number 
+        public Find(route:string) :number
         {
             return this.m_routingTable.indexOf(route);
         }
@@ -68,7 +79,7 @@ namespace core{
          * @param {string} route
          * @returns {boolean}
          */
-        public Remove(route:string):boolean 
+        public Remove(route:string) :boolean
         {
             if (this.Find(route) > -1) {
                 this.m_routingTable.splice(this.Find(route), 1);
@@ -82,36 +93,49 @@ namespace core{
          *
          * @returns {string}
          */
-        public ToString() :string 
+        public ToString() :string
         {
             return this.m_routingTable.toString();
         }
     }
-}
 
+}
 
 //TODO: need to move the code below into its own file
 let router = new core.Router();
-
 router.AddTable(["/", 
-"/home", 
-"about", 
-"/services", 
-"/contact", 
-"/contact-list", 
-"/projects", 
-"/register",  
-"/login", 
-"/edit"])
+                 "/home", 
+                 "/about", 
+                 "/services", 
+                 "/contact", 
+                 "/contact-list", 
+                 "/projects", 
+                 "/register", 
+                 "/login", 
+                 "/edit"]);
+                
+let route = location.pathname; // alias for location.pathname
 
-//console.log(router.ToString());
-let route = location.pathname;
 if(router.Find(route) > -1)
 {
-    //console.log("route found");
-    router.ActiveLink = (route == "/") ? "home" : route.substring(1);
+    router.ActiveLink = (route == "/") ? "home" : route.substring(1)
 }
 else
 {
-   router.ActiveLink = "404";
+    router.ActiveLink = "404";
 }
+
+// hack for GitHub Pages
+(function(l) {
+    if (l.search[1] === '/' ) {
+      var decoded = l.search.slice(1).split('&').map(function(s) { 
+        return s.replace(/~and~/g, '&')
+      }).join('?');
+      window.history.replaceState(null, null,
+          l.pathname.slice(0, -1) + decoded + l.hash
+      );
+    }
+  }(window.location));
+//-- End Single Page Apps for GitHub Pages -->
+
+
